@@ -26,10 +26,8 @@
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
-    min-height: 100vh;
   }
 
-  /* ─── NOISE TEXTURE ─── */
   body::before {
     content: '';
     position: fixed; inset: 0; z-index: 0;
@@ -49,6 +47,9 @@
     padding-bottom: 48px;
     border-bottom: 1px solid var(--border);
     position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.8s ease forwards;
   }
   .hero::after {
     content: '';
@@ -56,6 +57,10 @@
     bottom: -1px; left: 0;
     width: 120px; height: 2px;
     background: linear-gradient(to right, var(--accent), transparent);
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .hero-tag {
@@ -93,10 +98,7 @@
     color: var(--muted);
     margin-bottom: 20px;
   }
-  .hero-role span {
-    color: var(--text);
-    font-weight: 600;
-  }
+  .hero-role span { color: var(--text); font-weight: 600; }
 
   .hero-summary {
     font-size: 0.9rem;
@@ -106,7 +108,6 @@
   }
   .hero-summary strong { color: var(--accent); font-weight: 600; }
 
-  /* ─── CONTACT CARD ─── */
   .contact-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -116,6 +117,8 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
   }
   .contact-item {
     display: flex;
@@ -132,16 +135,17 @@
     border: 1px solid var(--border);
     border-radius: 7px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 12px;
-    flex-shrink: 0;
+    font-size: 12px; flex-shrink: 0;
   }
 
-  /* ─── BADGES STACK ─── */
+  /* ─── BADGES ─── */
   .badges {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
   }
   .badge {
     font-size: 0.78rem;
@@ -149,13 +153,16 @@
     padding: 5px 14px;
     border-radius: 6px;
     border: 1px solid;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
   }
+  .badge:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
   .badge-green { color: var(--accent); border-color: rgba(0,212,170,0.25); background: rgba(0,212,170,0.06); }
   .badge-purple { color: #a78bfa; border-color: rgba(124,58,237,0.3); background: rgba(124,58,237,0.07); }
   .badge-yellow { color: var(--accent3); border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.07); }
   .badge-red { color: #f87171; border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.07); }
 
-  /* ─── GRID LAYOUT ─── */
+  /* ─── GRID ─── */
   .grid { display: grid; grid-template-columns: 1fr 260px; gap: 32px; align-items: start; }
 
   /* ─── SECTION ─── */
@@ -171,12 +178,7 @@
     align-items: center;
     gap: 10px;
   }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
   /* ─── JOB CARD ─── */
   .job-card {
@@ -187,9 +189,17 @@
     margin-bottom: 16px;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, transform 0.2s;
+    opacity: 0;
+    transform: translateX(-20px);
   }
-  .job-card:hover { border-color: rgba(0,212,170,0.3); }
+  .job-card.visible {
+    animation: slideIn 0.6s ease forwards;
+  }
+  @keyframes slideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .job-card:hover { border-color: rgba(0,212,170,0.3); transform: translateX(4px); }
   .job-card::before {
     content: '';
     position: absolute;
@@ -199,102 +209,33 @@
     border-radius: 3px 0 0 3px;
   }
 
-  .job-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 4px;
-    gap: 12px;
-  }
-  .company-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text);
-  }
+  .job-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; gap: 12px; }
+  .company-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); }
   .job-period {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--accent);
-    background: rgba(0,212,170,0.08);
-    border: 1px solid rgba(0,212,170,0.2);
-    padding: 3px 10px;
-    border-radius: 20px;
-    white-space: nowrap;
-    flex-shrink: 0;
+    font-size: 0.72rem; font-weight: 600; color: var(--accent);
+    background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.2);
+    padding: 3px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0;
   }
-  .job-location {
-    font-size: 0.78rem;
-    color: var(--muted2);
-    margin-bottom: 16px;
-  }
-
+  .job-location { font-size: 0.78rem; color: var(--muted2); margin-bottom: 16px; }
   .role-block { margin-bottom: 16px; }
   .role-block:last-child { margin-bottom: 0; }
   .role-title {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent3);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent3);
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
   }
   .role-title::before { content: '◆'; font-size: 7px; }
-
   .job-card ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
-  .job-card ul li {
-    font-size: 0.855rem;
-    color: var(--muted);
-    padding-left: 14px;
-    position: relative;
-    line-height: 1.65;
-  }
-  .job-card ul li::before {
-    content: '›';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-weight: 700;
-  }
+  .job-card ul li { font-size: 0.855rem; color: var(--muted); padding-left: 14px; position: relative; line-height: 1.65; }
+  .job-card ul li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
   .job-card ul li strong { color: var(--text); font-weight: 500; }
-
-  .tools-bar {
-    margin-top: 14px;
-    padding-top: 12px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .tool-chip {
-    font-size: 0.72rem;
-    padding: 2px 10px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--muted);
-    font-family: 'Space Grotesk', monospace;
-  }
+  .tools-bar { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; gap: 6px; }
+  .tool-chip { font-size: 0.72rem; padding: 2px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; color: var(--muted); }
 
   /* ─── FORMATION ─── */
-  .formation-item {
-    display: flex;
-    gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-  }
+  .formation-item { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); }
   .formation-item:last-child { border-bottom: none; }
-  .f-year {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--accent);
-    min-width: 70px;
-    padding-top: 2px;
-    font-family: monospace;
-  }
+  .f-year { font-size: 0.72rem; font-weight: 700; color: var(--accent); min-width: 70px; padding-top: 2px; font-family: monospace; }
   .f-title { font-size: 0.875rem; font-weight: 500; color: var(--text); }
   .f-place { font-size: 0.78rem; color: var(--muted2); margin-top: 2px; }
 
@@ -305,62 +246,55 @@
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 16px;
+    opacity: 0;
+    transform: translateX(20px);
   }
-  .sidebar-title {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--muted2);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .sidebar-card.visible {
+    animation: slideInRight 0.6s ease forwards;
   }
-  .sidebar-title span { font-size: 12px; }
+  @keyframes slideInRight {
+    to { opacity: 1; transform: translateX(0); }
+  }
 
-  /* SKILLS */
-  .skill-row { margin-bottom: 13px; }
-  .skill-top { display: flex; justify-content: space-between; margin-bottom: 5px; }
+  .sidebar-title {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--muted2);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+
+  /* ─── SKILL BARS ANIMÉES ─── */
+  .skill-row { margin-bottom: 16px; }
+  .skill-top { display: flex; justify-content: space-between; margin-bottom: 6px; }
   .skill-name { font-size: 0.83rem; font-weight: 500; color: var(--text); }
   .skill-pct { font-size: 0.72rem; color: var(--muted2); font-family: monospace; }
   .skill-bar {
-    height: 3px;
+    height: 4px;
     background: var(--surface2);
-    border-radius: 3px;
+    border-radius: 4px;
     overflow: hidden;
+    position: relative;
   }
   .skill-fill {
     height: 100%;
-    border-radius: 3px;
+    border-radius: 4px;
     background: linear-gradient(to right, var(--accent), var(--accent2));
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
   }
-
-  /* LANGUES */
-  .lang-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
+  .skill-fill::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0;
+    width: 8px; height: 100%;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    box-shadow: 0 0 8px rgba(0,212,170,0.8);
   }
-  .lang-row:last-child { border-bottom: none; }
-  .flag { font-size: 1.3rem; }
-  .lang-name { font-size: 0.855rem; font-weight: 500; color: var(--text); }
-  .lang-level { font-size: 0.75rem; color: var(--muted2); }
+  .skill-row.animated .skill-fill { width: var(--target-width); }
 
-  /* TAGS */
-  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
-  .tag {
-    font-size: 0.75rem;
-    padding: 4px 11px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--muted);
-  }
-
-  /* ─── IA SECTION ─── */
+  /* ─── IA CARD ─── */
   .ai-card {
     background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(0,212,170,0.05));
     border: 1px solid rgba(124,58,237,0.3);
@@ -370,44 +304,25 @@
     position: relative;
     overflow: hidden;
   }
-  .ai-card::after {
-    content: '⚡';
-    position: absolute;
-    right: 16px; top: 14px;
-    font-size: 1.4rem;
-    opacity: 0.4;
-  }
-  .ai-title {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #a78bfa;
-    margin-bottom: 8px;
-  }
+  .ai-card::after { content: '⚡'; position: absolute; right: 16px; top: 14px; font-size: 1.4rem; opacity: 0.4; }
+  .ai-title { font-size: 0.65rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #a78bfa; margin-bottom: 8px; }
   .ai-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
   .ai-desc strong { color: #c4b5fd; }
   .ai-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-  .ai-tool {
-    font-size: 0.72rem;
-    padding: 3px 10px;
-    background: rgba(124,58,237,0.15);
-    border: 1px solid rgba(124,58,237,0.3);
-    border-radius: 4px;
-    color: #a78bfa;
-  }
+  .ai-tool { font-size: 0.72rem; padding: 3px 10px; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); border-radius: 4px; color: #a78bfa; }
+
+  /* ─── LANG & TAGS ─── */
+  .lang-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .lang-row:last-child { border-bottom: none; }
+  .flag { font-size: 1.3rem; }
+  .lang-name { font-size: 0.855rem; font-weight: 500; color: var(--text); }
+  .lang-level { font-size: 0.75rem; color: var(--muted2); }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag { font-size: 0.75rem; padding: 4px 11px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; color: var(--muted); transition: color 0.2s, border-color 0.2s; }
+  .tag:hover { color: var(--accent); border-color: rgba(0,212,170,0.3); }
 
   /* ─── FOOTER ─── */
-  .footer {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.75rem;
-    color: var(--muted2);
-  }
+  .footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--muted2); }
   .footer a { color: var(--accent); text-decoration: none; }
 
   @media (max-width: 700px) {
@@ -421,33 +336,30 @@
 <body>
 <div class="wrapper">
 
-  <!-- ─── HERO ─── -->
+  <!-- HERO -->
   <div class="hero">
     <div>
       <div class="hero-tag">Disponible · Open to opportunities</div>
       <h1>Alexandre<br><span class="last">CHRETIEN</span></h1>
-      <div class="hero-role">
-        <span>Chef de Projet Tech & Data</span> · ERP · BI · Contrôle de Gestion
-      </div>
+      <div class="hero-role"><span>Chef de Projet Tech & Data</span> · ERP · BI · Contrôle de Gestion</div>
       <p class="hero-summary">
         Profil <strong>atypique et polyvalent</strong> à la croisée de la finance, de la tech et de la data.
         Je pilote des projets IT complexes tout en gardant un ancrage solide dans les <strong>enjeux métier</strong>.
         De la construction d'un ERP from scratch à la mise en place d'un reporting multi-source,
         j'aime transformer des systèmes épars en <strong>outils de décision cohérents</strong>.
-        Passionné par l'IA et les nouvelles technologies, j'intègre naturellement ces leviers
-        dans chaque projet pour aller plus vite et plus loin.
+        Passionné par l'IA et les nouvelles technologies, j'intègre naturellement ces leviers dans chaque projet.
       </p>
     </div>
     <div class="contact-card">
       <div class="contact-item"><div class="c-icon">📍</div><span>Venette, 60280</span></div>
       <div class="contact-item"><div class="c-icon">📞</div><span>07 78 10 08 38</span></div>
-      <div class="contact-item"><div class="c-icon">✉</div><a href="mailto:alexandre.chretien60@gmail.com">alexandre.chretien60<br>@gmail.com</a></div>
+      <div class="contact-item"><div class="c-icon">✉</div><a href="mailto:alexandre.chretien60@gmail.com">alexandre.chretien60@gmail.com</a></div>
       <div class="contact-item"><div class="c-icon">🔑</div><span>Permis B · Véhiculé</span></div>
       <div class="contact-item"><div class="c-icon">👤</div><span>40 ans · Marié, 2 enfants</span></div>
     </div>
   </div>
 
-  <!-- ─── BADGES ─── -->
+  <!-- BADGES -->
   <div class="badges">
     <span class="badge badge-green">🛠 ERP from scratch</span>
     <span class="badge badge-green">📊 BI & Reporting</span>
@@ -459,108 +371,85 @@
     <span class="badge badge-purple">🏗 Architecture data</span>
   </div>
 
-  <!-- ─── MAIN GRID ─── -->
+  <!-- GRID -->
   <div class="grid">
-
-    <!-- LEFT -->
     <div>
 
       <!-- EXPÉRIENCE -->
       <div class="section">
         <div class="section-label">Expérience professionnelle</div>
 
-        <!-- FLEXIFLEET -->
         <div class="job-card">
           <div class="job-top">
             <div class="company-name">Flexifleet</div>
             <div class="job-period">2021 → Aujourd'hui</div>
           </div>
           <div class="job-location">📍 Compiègne · Loueur de véhicules</div>
-
           <div class="role-block">
             <div class="role-title">Référent ERP & Chef de Projet IT</div>
             <ul>
-              <li>Pilotage <strong>end-to-end</strong> d'un ERP développé de zéro sur <strong>MongoDB / GCP</strong>, migration en cours vers MongoDB Atlas — de la spécification à la mise en production.</li>
-              <li>Coordination prestataires (B2T), supervision technique des sprints et animation des ateliers métiers avec les équipes opérationnelles.</li>
-              <li>Mise en place du <strong>monitoring applicatif</strong> et intégration des outils internes dans l'ERP pour une plateforme unifiée.</li>
-              <li>Conduite du changement : formation, accompagnement et adoption par les utilisateurs.</li>
+              <li>Pilotage <strong>end-to-end</strong> d'un ERP développé de zéro sur <strong>MongoDB / GCP</strong>, migration vers MongoDB Atlas.</li>
+              <li>Coordination prestataires (B2T), supervision technique des sprints et animation des ateliers métiers.</li>
+              <li>Mise en place du <strong>monitoring applicatif</strong> et intégration des outils internes dans l'ERP.</li>
+              <li>Conduite du changement : formation, accompagnement et adoption.</li>
             </ul>
           </div>
-
           <div class="role-block">
             <div class="role-title">Contrôle de Gestion & Reporting Data</div>
             <ul>
-              <li>Structuration du <strong>reporting financier</strong> (Excel, Finthesis/Cegid) et développement de dashboards via <strong>Power BI, Looker, MongoDB Atlas Charts</strong>.</li>
-              <li>Garant des KPIs transverses (finance, logistique, commerce) — de la donnée brute à la décision CODIR.</li>
+              <li>Structuration du <strong>reporting financier</strong> et développement de dashboards via <strong>Power BI, Looker, MongoDB Atlas Charts</strong>.</li>
+              <li>Garant des KPIs transverses — de la donnée brute à la décision CODIR.</li>
               <li>Gestion des encaissements clients : <strong>600 k€/semaine</strong>, 2 100 clients actifs.</li>
             </ul>
           </div>
-
           <div class="role-block">
             <div class="role-title">IT & Infrastructures</div>
             <ul>
-              <li>Administration du parc informatique, gestion des accès et coordination réseau (SFR/Orange).</li>
-              <li>Intégration d'un stack digital complet : <strong>HubSpot, Zendesk, DocuWare, AirCall</strong> connectés à l'ERP via API.</li>
+              <li>Administration parc informatique, coordination réseau (SFR/Orange).</li>
+              <li>Intégration stack digital : <strong>HubSpot, Zendesk, DocuWare, AirCall</strong> via API.</li>
             </ul>
           </div>
-
           <div class="role-block">
             <div class="role-title">Responsable Flotte Véhicules</div>
             <ul>
               <li>Création et structuration du service de A à Z.</li>
-              <li>Planification et commandes de <strong>1 500 véhicules neufs/an</strong>, coordination logistique et préparations spécifiques.</li>
+              <li>Planification et commandes de <strong>1 500 véhicules neufs/an</strong>.</li>
             </ul>
           </div>
-
           <div class="tools-bar">
-            <span class="tool-chip">MongoDB</span>
-            <span class="tool-chip">GCP</span>
-            <span class="tool-chip">Power BI</span>
-            <span class="tool-chip">Looker</span>
-            <span class="tool-chip">HubSpot</span>
-            <span class="tool-chip">Zendesk</span>
-            <span class="tool-chip">Cegid</span>
-            <span class="tool-chip">DocuWare</span>
+            <span class="tool-chip">MongoDB</span><span class="tool-chip">GCP</span>
+            <span class="tool-chip">Power BI</span><span class="tool-chip">Looker</span>
+            <span class="tool-chip">HubSpot</span><span class="tool-chip">Zendesk</span>
+            <span class="tool-chip">Cegid</span><span class="tool-chip">DocuWare</span>
           </div>
         </div>
 
-        <!-- LA HALLE -->
         <div class="job-card">
           <div class="job-top">
             <div class="company-name">La Halle SAS</div>
             <div class="job-period">2008 → 2021</div>
           </div>
           <div class="job-location">📍 Paris · Retail multi-enseignes</div>
-
           <div class="role-block">
             <div class="role-title">Analyste Développeur BI</div>
             <ul>
-              <li>Garant de la <strong>chaîne BI/DWH</strong> multi-enseignes (France & international) : alimentation, incidents, qualité des flux.</li>
-              <li>Conduite du changement vers le reporting BI pour la gestion, comptabilité, Supply Chain et Achats.</li>
-              <li>Recette technique & fonctionnelle en collaboration avec consultants et équipes DAF.</li>
-              <li>Déploiement de rapports institutionnels et dossiers de direction.</li>
+              <li>Garant de la <strong>chaîne BI/DWH</strong> multi-enseignes France & international.</li>
+              <li>Conduite du changement vers le reporting BI pour la gestion, comptabilité, Supply Chain.</li>
+              <li>Recette technique & fonctionnelle, déploiement de rapports institutionnels DAF.</li>
             </ul>
           </div>
-
           <div class="role-block">
             <div class="role-title">Contrôleur de Gestion</div>
             <ul>
-              <li>Clôtures mensuelle et annuelle : CA brut → Marge nette (cadrage, provisions, ajustements).</li>
-              <li>Construction & révision du <strong>budget achats marchands</strong> avec la centrale, dans le respect des objectifs Cash Flow / BFR.</li>
+              <li>Clôtures mensuelle et annuelle : CA brut → Marge nette.</li>
+              <li>Construction & révision du <strong>budget achats marchands</strong>, respect Cash Flow / BFR.</li>
               <li>Présentation des <strong>stratégies soldes en CODIR</strong>.</li>
-              <li>Formation et intégration d'un collaborateur junior.</li>
             </ul>
           </div>
-
           <div class="tools-bar">
-            <span class="tool-chip">SAP Finance</span>
-            <span class="tool-chip">Cognos</span>
-            <span class="tool-chip">MicroStrategy</span>
-            <span class="tool-chip">Teradata</span>
-            <span class="tool-chip">Tagetik</span>
-            <span class="tool-chip">Unit4 CODA</span>
-            <span class="tool-chip">CICS</span>
-            <span class="tool-chip">Harry 2</span>
+            <span class="tool-chip">SAP Finance</span><span class="tool-chip">Cognos</span>
+            <span class="tool-chip">MicroStrategy</span><span class="tool-chip">Teradata</span>
+            <span class="tool-chip">Tagetik</span><span class="tool-chip">Unit4 CODA</span>
           </div>
         </div>
       </div>
@@ -570,47 +459,33 @@
         <div class="section-label">Formations & Certifications</div>
         <div class="formation-item">
           <div class="f-year">2020</div>
-          <div>
-            <div class="f-title">MicroStrategy — Architecte, Admin, Reporting & Mesures avancées</div>
-            <div class="f-place">+ Teradata (TPT)</div>
-          </div>
+          <div><div class="f-title">MicroStrategy — Architecte, Admin, Reporting & Mesures avancées</div><div class="f-place">+ Teradata (TPT)</div></div>
         </div>
         <div class="formation-item">
           <div class="f-year">2007–08</div>
-          <div>
-            <div class="f-title">Licence Pro Contrôleur de Gestion</div>
-            <div class="f-place">Université Jules Vernes · Beauvais (60)</div>
-          </div>
+          <div><div class="f-title">Licence Pro Contrôleur de Gestion</div><div class="f-place">Université Jules Vernes · Beauvais (60)</div></div>
         </div>
         <div class="formation-item">
           <div class="f-year">2005–07</div>
-          <div>
-            <div class="f-title">BTS Assistant de Gestion PME-PMI</div>
-            <div class="f-place">Lycée Jean Racine · Montdidier (80)</div>
-          </div>
+          <div><div class="f-title">BTS Assistant de Gestion PME-PMI</div><div class="f-place">Lycée Jean Racine · Montdidier (80)</div></div>
         </div>
         <div class="formation-item">
           <div class="f-year">2004–05</div>
-          <div>
-            <div class="f-title">Baccalauréat Économique et Social</div>
-            <div class="f-place">Lycée François Truffaut · Beauvais (60)</div>
-          </div>
+          <div><div class="f-title">Baccalauréat Économique et Social</div><div class="f-place">Lycée François Truffaut · Beauvais (60)</div></div>
         </div>
       </div>
 
     </div>
 
-    <!-- RIGHT SIDEBAR -->
+    <!-- SIDEBAR -->
     <div>
 
-      <!-- IA CARD -->
-      <div class="ai-card">
+      <!-- IA -->
+      <div class="ai-card sidebar-card">
         <div class="ai-title">⚡ IA & Automatisation</div>
         <div class="ai-desc">
           Utilisateur avancé et <strong>early adopter</strong> de l'IA générative.
-          J'intègre ces outils dans mon quotidien professionnel : automatisation de reporting,
-          génération de code, assistance à la rédaction de specs, et exploration de workflows <strong>no-code / low-code</strong>.
-          Curieux permanent, je veille activement sur les évolutions du secteur.
+          Automatisation de reporting, génération de code, workflows <strong>no-code / low-code</strong>.
         </div>
         <div class="ai-tools">
           <span class="ai-tool">Claude</span>
@@ -622,32 +497,41 @@
         </div>
       </div>
 
-      <!-- COMPÉTENCES -->
+      <!-- COMPÉTENCES ANIMÉES -->
       <div class="sidebar-card">
         <div class="sidebar-title"><span>⚙</span> Stack technique</div>
-        <div class="skill-row">
+
+        <div class="skill-row" data-width="80">
           <div class="skill-top"><span class="skill-name">MongoDB / NoSQL</span><span class="skill-pct">80%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="--target-width: 80%"></div></div>
         </div>
-        <div class="skill-row">
+        <div class="skill-row" data-width="88">
           <div class="skill-top"><span class="skill-name">Power BI / Looker</span><span class="skill-pct">88%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="--target-width: 88%"></div></div>
         </div>
-        <div class="skill-row">
+        <div class="skill-row" data-width="80">
           <div class="skill-top"><span class="skill-name">MicroStrategy</span><span class="skill-pct">80%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="--target-width: 80%"></div></div>
         </div>
-        <div class="skill-row">
+        <div class="skill-row" data-width="65">
           <div class="skill-top"><span class="skill-name">Teradata / DWH</span><span class="skill-pct">65%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="--target-width: 65%"></div></div>
         </div>
-        <div class="skill-row">
+        <div class="skill-row" data-width="95">
           <div class="skill-top"><span class="skill-name">Excel avancé</span><span class="skill-pct">95%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="--target-width: 95%"></div></div>
         </div>
-        <div class="skill-row">
+        <div class="skill-row" data-width="72">
           <div class="skill-top"><span class="skill-name">Intégrations API</span><span class="skill-pct">72%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="--target-width: 72%"></div></div>
+        </div>
+        <div class="skill-row" data-width="70">
+          <div class="skill-top"><span class="skill-name">Proxmox / Infra</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="--target-width: 70%"></div></div>
+        </div>
+        <div class="skill-row" data-width="85">
+          <div class="skill-top"><span class="skill-name">Jeedom / Domotique</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="--target-width: 85%"></div></div>
         </div>
       </div>
 
@@ -675,7 +559,7 @@
         </div>
         <div class="lang-row">
           <span class="flag">🇬🇧</span>
-          <div><div class="lang-name">Anglais</div><div class="lang-level">Professionnel (outils, docs, échanges)</div></div>
+          <div><div class="lang-name">Anglais</div><div class="lang-level">Professionnel</div></div>
         </div>
       </div>
 
@@ -687,18 +571,57 @@
           <span class="tag">🤖 IA / No-code</span>
           <span class="tag">🔧 Bricolage</span>
           <span class="tag">🚗 Automobile</span>
+          <span class="tag">☀️ Solaire</span>
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- FOOTER -->
   <div class="footer">
     <span>Alexandre CHRETIEN · Chef de Projet Tech & Data</span>
     <a href="mailto:alexandre.chretien60@gmail.com">alexandre.chretien60@gmail.com</a>
   </div>
 
 </div>
+
+<script>
+  // ─── INTERSECTION OBSERVER pour animations au scroll ───
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+          // Animer les barres de compétences
+          const skillRows = entry.target.querySelectorAll('.skill-row');
+          skillRows.forEach((row, i) => {
+            setTimeout(() => {
+              row.classList.add('animated');
+            }, i * 150);
+          });
+        }, index * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Observer job cards
+  document.querySelectorAll('.job-card').forEach(card => observer.observe(card));
+  document.querySelectorAll('.sidebar-card').forEach(card => observer.observe(card));
+
+  // Animer les barres visibles au chargement
+  setTimeout(() => {
+    document.querySelectorAll('.sidebar-card').forEach(card => {
+      const rect = card.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        card.classList.add('visible');
+        card.querySelectorAll('.skill-row').forEach((row, i) => {
+          setTimeout(() => row.classList.add('animated'), i * 150 + 500);
+        });
+      }
+    });
+  }, 300);
+</script>
+
 </body>
 </html>
