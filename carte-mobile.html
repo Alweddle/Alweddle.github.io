@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexandre Chrétien</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Rajdhani', sans-serif;
+    padding: 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 380px;
+    background: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 28px 32px;
+    gap: 28px;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ff88, transparent);
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00ff8844, transparent);
+  }
+
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .corner {
+    position: absolute;
+    width: 16px; height: 16px;
+    border-color: #00ff88;
+    border-style: solid;
+    opacity: 0.5;
+  }
+  .corner.tl { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
+  .corner.tr { top: 10px; right: 10px; border-width: 1px 1px 0 0; }
+  .corner.bl { bottom: 10px; left: 10px; border-width: 0 0 1px 1px; }
+  .corner.br { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
+
+  /* NOM */
+  .name-block {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .name {
+    font-size: 30px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .name span { color: #00ff88; }
+
+  .title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #ffffff;
+    letter-spacing: 3px;
+    margin-top: 8px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .tagline {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: #00ff8899;
+    letter-spacing: 2px;
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* QR CODE */
+  .qr-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .qr-frame {
+    border: 1px solid #00ff8866;
+    padding: 10px;
+    position: relative;
+    background: #000;
+  }
+
+  .qr-frame::before {
+    content: '';
+    position: absolute;
+    top: -4px; left: -4px; right: -4px; bottom: -4px;
+    border: 1px solid #00ff8822;
+  }
+
+  .scan-anim {
+    position: absolute;
+    left: 10px; right: 10px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00ff88, transparent);
+    animation: scan 2.5s ease-in-out infinite;
+    top: 10px;
+  }
+
+  @keyframes scan {
+    0%   { top: 10px; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { top: calc(100% - 10px); opacity: 0; }
+  }
+
+  .qr-url {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #00ff88;
+    letter-spacing: 2px;
+  }
+
+  .qr-hint {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: #333;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* CONTACTS */
+  .contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 10px;
+  }
+
+  .contact-line:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .contact-icon {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #00ff88;
+    width: 18px;
+    opacity: 0.8;
+    flex-shrink: 0;
+  }
+
+  .contact-value {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #ffffff;
+    letter-spacing: 1px;
+  }
+
+  /* TAGS */
+  .tags {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: #00ff8866;
+    letter-spacing: 2px;
+    border: 1px solid #00ff8822;
+    padding: 3px 8px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="grid-bg"></div>
+  <div class="corner tl"></div><div class="corner tr"></div>
+  <div class="corner bl"></div><div class="corner br"></div>
+
+  <div class="name-block">
+    <div class="name">Alexandre <span>CHRETIEN</span></div>
+    <div class="title">// Chef de Projet Tech & Data</div>
+    <div class="tagline">// Building systems that think</div>
+  </div>
+
+  <div class="qr-block">
+    <div class="qr-frame">
+      <canvas id="qr" width="160" height="160"></canvas>
+      <div class="scan-anim"></div>
+    </div>
+    <div class="qr-url">alweddle.github.io</div>
+    <div class="qr-hint">— Scannez pour accéder au CV —</div>
+  </div>
+
+  <div class="contacts">
+    <div class="contact-line">
+      <span class="contact-icon">@</span>
+      <span class="contact-value">alexandre.chretien60@gmail.com</span>
+    </div>
+    <div class="contact-line">
+      <span class="contact-icon">☎</span>
+      <span class="contact-value">07 78 10 08 38</span>
+    </div>
+    <div class="contact-line">
+      <span class="contact-icon">⌘</span>
+      <span class="contact-value">alweddle.github.io</span>
+    </div>
+  </div>
+
+  <div class="tags">
+    <div class="tag">ERP · INFOGÉRANCE · CLOUD</div>
+    <div class="tag">DATA · POWER BI · REPORTING</div>
+    <div class="tag">HOMELAB · IOT · DOMOTIQUE</div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const tmp = document.createElement('div');
+tmp.style.display = 'none';
+document.body.appendChild(tmp);
+
+new QRCode(tmp, {
+  text: 'https://alweddle.github.io',
+  width: 160, height: 160,
+  colorDark: '#ffffff',
+  colorLight: '#000000',
+  correctLevel: QRCode.CorrectLevel.H
+});
+
+setTimeout(() => {
+  const canvas = document.getElementById('qr');
+  const ctx = canvas.getContext('2d');
+  const src = tmp.querySelector('img') || tmp.querySelector('canvas');
+  const img = new Image();
+  img.onload = () => {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, 160, 160);
+    ctx.drawImage(img, 0, 0, 160, 160);
+  };
+  img.src = src.src || src.toDataURL();
+  document.body.removeChild(tmp);
+}, 400);
+</script>
+
+</body>
+</html>
