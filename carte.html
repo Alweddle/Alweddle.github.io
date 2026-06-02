@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carte de visite — Alexandre CHRETIEN</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Rajdhani', sans-serif;
+    padding: 40px 20px;
+    gap: 20px;
+  }
+
+  .label {
+    font-family: 'Share Tech Mono', monospace;
+    color: #444;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .card {
+    width: 540px;
+    height: 300px;
+    background: #0d0d0d;
+    border: 1px solid #1e1e1e;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 28px 32px;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ff88, transparent);
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00ff8844, transparent);
+  }
+
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .corner {
+    position: absolute;
+    width: 16px; height: 16px;
+    border-color: #00ff88;
+    border-style: solid;
+    opacity: 0.5;
+  }
+  .corner.tl { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
+  .corner.tr { top: 10px; right: 10px; border-width: 1px 1px 0 0; }
+  .corner.bl { bottom: 10px; left: 10px; border-width: 0 0 1px 1px; }
+  .corner.br { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .name { font-size: 28px; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; line-height: 1; }
+  .name span { color: #00ff88; }
+  .title { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #00ff88; letter-spacing: 3px; margin-top: 6px; text-transform: uppercase; }
+  .tag-line { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: #ffff; letter-spacing: 2px; margin-top: 4px;font-weight: 700; }
+
+  .qr-block { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .qr-frame { border: 1px solid #00ff8844; padding: 6px; position: relative; }
+  .qr-label { font-family: 'Share Tech Mono', monospace; font-size: 8px; color: #00ff8877; letter-spacing: 2px; }
+
+  .card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contacts { display: flex; flex-direction: column; gap: 5px; }
+  .contact-line { display: flex; align-items: center; gap: 8px; }
+  .contact-icon { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: #00ff88; width: 16px; opacity: 0.7; }
+  .contact-value { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #ffffff; letter-spacing: 1px; }
+
+  .stack-tags { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; width: 200px}
+  .tag { font-family: 'Share Tech Mono', monospace; font-size: 8px; color: #00ff8866; letter-spacing: 2px; border: 1px solid #00ff8822; padding: 2px 8px; width: 100%;text-align: center; box-sizing: border-box; }
+
+  /* VERSO */
+  .verso {
+    background: #0d0d0d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .verso-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+  }
+
+  .verso-logo {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #00ff88;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .verso-qr-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .verso-qr-frame {
+    border: 1px solid #00ff8866;
+    padding: 10px;
+    position: relative;
+    background: #000;
+  }
+
+  .verso-qr-frame::before {
+    content: '';
+    position: absolute;
+    top: -4px; left: -4px; right: -4px; bottom: -4px;
+    border: 1px solid #00ff8822;
+  }
+
+  .verso-url {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #00ff88;
+    letter-spacing: 3px;
+  }
+
+  .verso-scan-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: #333;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .scan-anim {
+    position: absolute;
+    left: 10px; right: 10px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00ff88, transparent);
+    animation: scan 2.5s ease-in-out infinite;
+    top: 10px;
+  }
+
+  @keyframes scan {
+    0%   { top: 10px; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { top: calc(100% - 10px); opacity: 0; }
+  }
+
+  /* Actions */
+  .actions { display: flex; gap: 12px; }
+  button {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid #00ff8855;
+    color: #00ff88;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  button:hover { background: #00ff8811; border-color: #00ff88; }
+
+  @media print {
+    body { background: white; padding: 0; gap: 10px; }
+    .label, .actions { display: none; }
+    .card { width: 85.6mm; height: 53.98mm; }
+  }
+</style>
+</head>
+<body>
+
+<!-- RECTO -->
+<div class="label">// RECTO</div>
+<div class="card" id="card-recto">
+  <div class="grid-bg"></div>
+  <div class="corner tl"></div><div class="corner tr"></div>
+  <div class="corner bl"></div><div class="corner br"></div>
+
+  <div class="card-top">
+    <div class="name-block">
+      <div class="name">Alexandre <span>CHRETIEN</span></div>
+      <div class="title">// Chef de Projet Tech &amp; Data</div>
+      <div class="tag-line">// Building systems that think</div>
+    </div>
+    <div class="qr-block">
+      <div class="qr-frame">
+        <canvas id="qr-recto" width="80" height="80"></canvas>
+      </div>
+      <div class="qr-label">SCAN → CV</div>
+    </div>
+  </div>
+
+  <div class="card-bottom">
+    <div class="contacts">
+      <div class="contact-line">
+        <span class="contact-icon">@</span>
+        <span class="contact-value">alexandre.chretien@email.com</span>
+      </div>
+      <div class="contact-line">
+        <span class="contact-icon">☎</span>
+        <span class="contact-value">07 78 10 08 38</span>
+      </div>
+      <div class="contact-line">
+        <span class="contact-icon">⌘</span>
+        <span class="contact-value">alweddle.github.io</span>
+      </div>
+    </div>
+    <div class="stack-tags">
+      <div class="tag">ERP · INFOGÉRANCE · CLOUD</div>
+      <div class="tag">DATA · POWER BI · REPORTING</div>
+      <div class="tag">HOMELAB · IOT · DOMOTIQUE</div>
+    </div>
+  </div>
+</div>
+
+<!-- VERSO -->
+<div class="label">// VERSO</div>
+<div class="card verso" id="card-verso">
+  <div class="grid-bg"></div>
+  <div class="corner tl"></div><div class="corner tr"></div>
+  <div class="corner bl"></div><div class="corner br"></div>
+
+  <div class="verso-inner">
+    <div class="verso-logo">// Alexandre Chrétien //</div>
+
+    <div class="verso-qr-wrap">
+      <div class="verso-qr-frame">
+        <canvas id="qr-verso" width="120" height="120"></canvas>
+        <div class="scan-anim"></div>
+      </div>
+      <div class="verso-url">alweddle.github.io</div>
+      <div class="verso-scan-label">— Scannez pour accéder au CV —</div>
+    </div>
+  </div>
+</div>
+
+<div class="actions">
+  <button onclick="window.print()">⎙ Imprimer les deux faces</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+function makeQR(canvasId, size) {
+  const tmp = document.createElement('div');
+  tmp.style.display = 'none';
+  document.body.appendChild(tmp);
+
+  new QRCode(tmp, {
+    text: 'https://alweddle.github.io',
+    width: size, height: size,
+    colorDark: '#ffffff',
+    colorLight: '#000000',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  setTimeout(() => {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    const src = tmp.querySelector('img') || tmp.querySelector('canvas');
+    const img = new Image();
+    img.onload = () => {
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, size, size);
+      ctx.drawImage(img, 0, 0, size, size);
+    };
+    img.src = src.src || src.toDataURL();
+    document.body.removeChild(tmp);
+  }, 400);
+}
+
+makeQR('qr-recto', 80);
+makeQR('qr-verso', 120);
+</script>
+
+</body>
+</html>
