@@ -70,7 +70,6 @@
   .corner.bl { bottom: 10px; left: 10px; border-width: 0 0 1px 1px; }
   .corner.br { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
 
-  /* NOM */
   .name-block {
     text-align: center;
     position: relative;
@@ -107,7 +106,6 @@
     font-style: italic;
   }
 
-  /* QR CODE */
   .qr-block {
     display: flex;
     flex-direction: column;
@@ -162,7 +160,6 @@
     text-transform: uppercase;
   }
 
-  /* CONTACTS */
   .contacts {
     display: flex;
     flex-direction: column;
@@ -201,7 +198,13 @@
     letter-spacing: 1px;
   }
 
-  /* TAGS */
+  .contact-value a {
+    color: #00ff88;
+    text-decoration: none;
+  }
+
+  .contact-value a:hover { text-decoration: underline; }
+
   .tags {
     display: flex;
     flex-direction: column;
@@ -249,7 +252,7 @@
   <div class="contacts">
     <div class="contact-line">
       <span class="contact-icon">@</span>
-      <span class="contact-value">alexandre.chretien60@gmail.com</span>
+      <span class="contact-value"><a href="mailto:alexandre.chretien60@gmail.com" style="color:#ffffff;text-decoration:none;">alexandre.chretien60@gmail.com</a></span>
     </div>
     <div class="contact-line">
       <span class="contact-icon">☎</span>
@@ -257,7 +260,15 @@
     </div>
     <div class="contact-line">
       <span class="contact-icon">⌘</span>
-      <span class="contact-value">alweddle.github.io</span>
+      <span class="contact-value"><a href="https://alweddle.github.io/" target="_blank">alweddle.github.io</a></span>
+    </div>
+    <div class="contact-line">
+      <span class="contact-icon" style="font-size:8px;width:22px;min-width:22px;text-align:center;display:inline-flex;align-items:center;justify-content:center;">t.me</span>
+      <span class="contact-value"><a href="https://t.me/ALWEDDLE" target="_blank">@ALWEDDLE</a></span>
+    </div>
+    <div class="contact-line">
+      <span class="contact-icon" style="font-size:8px;width:22px;min-width:22px;text-align:center;display:inline-flex;align-items:center;justify-content:center;">gh</span>
+      <span class="contact-value"><a href="https://github.com/Alweddle" target="_blank" style="color:#00ff88;text-decoration:none;">github.com/Alweddle</a></span>
     </div>
   </div>
 
