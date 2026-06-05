@@ -160,71 +160,15 @@
     text-transform: uppercase;
   }
 
-  .contacts {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    position: relative;
-    z-index: 1;
-  }
-
-  .contact-line {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-bottom: 1px solid #1a1a1a;
-    padding-bottom: 10px;
-  }
-
-  .contact-line:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  .contact-icon {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    color: #00ff88;
-    width: 18px;
-    opacity: 0.8;
-    flex-shrink: 0;
-  }
-
-  .contact-value {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    color: #ffffff;
-    letter-spacing: 1px;
-  }
-
-  .contact-value a {
-    color: #00ff88;
-    text-decoration: none;
-  }
-
+  .contacts { display: flex; flex-direction: column; gap: 5px; }
+  .contact-line { display: flex; align-items: center; gap: 8px; }
+  .contact-icon { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: #00ff88; width: 22px; min-width: 22px; opacity: 0.7; text-align: center; display: inline-flex; align-items: center; justify-content: center; }
+  .contact-value { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #ffffff; letter-spacing: 1px; }
+  .contact-value a { color: #00ff88; text-decoration: none; }
   .contact-value a:hover { text-decoration: underline; }
 
-  .tags {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    width: 100%;
-    position: relative;
-    z-index: 1;
-  }
-
-  .tag {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 8px;
-    color: #00ff88;
-    letter-spacing: 2px;
-    border: 1px solid #00ff8822;
-    padding: 3px 8px;
-    text-align: center;
-    width: 100%;
-    box-sizing: border-box;
-  }
+  .stack-tags { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; width: 200px; }
+  .tag { font-family: 'Share Tech Mono', monospace; font-size: 8px; color: #00ff8866; letter-spacing: 2px; border: 1px solid #00ff8822; padding: 2px 8px; width: 100%; text-align: center; box-sizing: border-box; }
 </style>
 </head>
 <body>
@@ -263,11 +207,11 @@
       <span class="contact-value"><a href="https://alweddle.github.io/" target="_blank">alweddle.github.io</a></span>
     </div>
     <div class="contact-line">
-      <span class="contact-icon" style="font-size:8px;width:22px;min-width:22px;text-align:center;display:inline-flex;align-items:center;justify-content:center;">t.me</span>
+      <span class="contact-icon" style="font-size:8px;">t.me</span>
       <span class="contact-value"><a href="https://t.me/ALWEDDLE" target="_blank">@ALWEDDLE</a></span>
     </div>
     <div class="contact-line">
-      <span class="contact-icon" style="font-size:8px;width:22px;min-width:22px;text-align:center;display:inline-flex;align-items:center;justify-content:center;">gh</span>
+      <span class="contact-icon" style="font-size:8px;">gh</span>
       <span class="contact-value"><a href="https://github.com/Alweddle" target="_blank" style="color:#00ff88;text-decoration:none;">github.com/Alweddle</a></span>
     </div>
   </div>
